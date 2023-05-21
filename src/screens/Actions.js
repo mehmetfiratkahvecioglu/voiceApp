@@ -8,7 +8,7 @@ import {
   Dimensions,
   Pressable,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Actions = ({ navigation, route }) => {
   const { selectedFile } = route.params;
@@ -16,6 +16,11 @@ const Actions = ({ navigation, route }) => {
   const [wordCount, setWordCount] = useState();
   const [sentiment, setSentiment] = useState();
   const [accFm, setAccFm] = useState();
+
+  useEffect(() => {
+    //fonksiyonları burada çağır
+  }, []);
+
   return (
     <ImageBackground
       source={require("../../assets/voiceBackground.jpeg")}
