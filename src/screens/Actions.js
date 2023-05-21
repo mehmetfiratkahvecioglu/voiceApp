@@ -8,19 +8,35 @@ import {
   Dimensions,
   Pressable,
 } from "react-native";
-import React from "react";
+import { useState } from "react";
 
 const Actions = ({ navigation, route }) => {
   const { selectedFile } = route.params;
+  const [person, setPerson] = useState();
+  const [wordCount, setWordCount] = useState();
+  const [sentiment, setSentiment] = useState();
+  const [accFm, setAccFm] = useState();
   return (
     <ImageBackground
       source={require("../../assets/voiceBackground.jpeg")}
-      style={{ flex: 1 }}
+      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
     >
-      <View style={styles.container}>
-        <View style={styles.innerContainer}>
-          <Text style={{ color: "#FAFAFA", fontSize: 20 }}>{selectedFile}</Text>
-        </View>
+      <View style={styles.innerContainer}>
+        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
+          Seçilen Dosya: {selectedFile}
+        </Text>
+        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
+          Kişi: {person}
+        </Text>
+        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
+          Kelime Sayısı: {wordCount}
+        </Text>
+        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
+          Duygu Tahmini: {sentiment}
+        </Text>
+        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
+          Acc Fm Değeri: {accFm}
+        </Text>
       </View>
     </ImageBackground>
   );
@@ -29,11 +45,6 @@ const Actions = ({ navigation, route }) => {
 export default Actions;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   innerContainer: {
     width: screenWidth * 0.8,
     backgroundColor: "rgba(0,0,0,0.8)",

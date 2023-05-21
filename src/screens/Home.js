@@ -56,14 +56,21 @@ export default function Home({ navigation }) {
     >
       <View style={styles.container}>
         <View style={styles.innerContainer}>
+          <View style={styles.titleContainer}>
+            <Text
+              style={{ color: "#FAFAFA", fontSize: 20, fontWeight: "bold" }}
+            >
+              Ses Tahmin Uygulaması
+            </Text>
+          </View>
           <Pressable onPress={pickFile} style={styles.pickFileButton}>
             <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
-              Dosya Seç
+              {selectedFile ? "Başka Bir Dosya Seç" : "Dosya Seç"}
             </Text>
           </Pressable>
           {selectedFile && (
             <View style={styles.fileContainer}>
-              <Text style={{ color: "white" }}>
+              <Text style={{ color: "white", fontWeight: "bold" }}>
                 Seçilen Dosya: {selectedFile}
               </Text>
             </View>
@@ -94,7 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.8)",
     padding: 20,
     borderRadius: 20,
-    minHeight: screenHeight * 0.3,
+    minHeight: screenHeight * 0.5,
     justifyContent: "space-evenly",
   },
   pickFileButton: {
@@ -112,10 +119,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   fileContainer: {
-    backgroundColor: "#1565C0",
+    backgroundColor: "#78909C",
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+  },
+  titleContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255, 0, 0, 0.4);",
+    padding: 10,
+    borderRadius: 10,
   },
 });
