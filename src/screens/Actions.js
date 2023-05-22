@@ -11,7 +11,8 @@ import {
 import { useState, useEffect } from "react";
 
 const Actions = ({ navigation, route }) => {
-  const { selectedFile } = route.params;
+  const { selectedFile, fileData } = route.params;
+  console.log("fileData", fileData);
   const [person, setPerson] = useState();
   const [wordCount, setWordCount] = useState();
   const [sentiment, setSentiment] = useState();

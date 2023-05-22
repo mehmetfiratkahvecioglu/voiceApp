@@ -18,8 +18,8 @@ screenHeight = Dimensions.get("window").height;
 
 export default function Home({ navigation }) {
   const [selectedFile, setSelectedFile] = useState(null);
-
-  const pickFile = async () => {
+  const fileData = new FormData();
+  /*const pickFile = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
         type: "audio/*",
@@ -43,10 +43,48 @@ export default function Home({ navigation }) {
     } catch (error) {
       console.log("Hata:", error);
     }
+  };*/
+
+  const pickFile = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: "audio/*",
+        copyToCacheDirectory: false,
+      });
+
+      if (result.type === "success") {
+        const { name, uri } = result;
+        const fileInfo = await FileSystem.getInfoAsync(uri);
+        const fileExtension = name.split(".").pop().toLowerCase();
+
+        if (fileExtension === "wav" && fileInfo.exists) {
+          fileData.append("file", {
+            uri: uri,
+            name: name,
+            type: "audio/wav",
+          });
+
+          // Burada fileData'ı bir POST isteği ile sunucuya göndermek için gerekli işlemleri yapabilirsiniz.
+          // Örneğin, axios veya fetch kullanarak bir POST isteği gönderebilirsiniz.
+
+          // Örnek Axios kullanımı:
+          // await axios.post("https://example.com/upload", fileData);
+
+          setSelectedFile(name);
+        } else {
+          setSelectedFile(null);
+          console.log("Geçerli bir WAV dosyası seçiniz.");
+        }
+      } else {
+        setSelectedFile(null);
+      }
+    } catch (error) {
+      console.log("Hata:", error);
+    }
   };
 
   const handleContinue = () => {
-    navigation.navigate("Actions", { selectedFile });
+    navigation.navigate("Actions", { selectedFile, fileData });
   };
 
   return (
