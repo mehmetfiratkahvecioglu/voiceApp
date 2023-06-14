@@ -9,7 +9,7 @@ import {
   Pressable,
 } from "react-native";
 import { useState, useEffect } from "react";
-
+import axios from "axios";
 const Actions = ({ navigation, route }) => {
   const [person, setPerson] = useState();
   const [wordCount, setWordCount] = useState();
@@ -19,10 +19,46 @@ const Actions = ({ navigation, route }) => {
   const { selectedFile, fileDataState } = route.params;
 
   useEffect(() => {
+
     //fonksiyonları burada çağır
+    const audioURI = fileDataState._parts[0][1].uri;
+    const uploadAudio = async (url) => {
+      try {
+        const formData = new FormData();
+        formData.append('audio_file', {
+          uri: audioURI,
+          type: 'audio/wav',
+          name: fileDataState._parts[0][1].name
+        });
+    
+        const response = await axios.post(url, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+    
+        console.log('Response:', response.data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    //uploadAudio("http://10.0.2.2:5000/api/histogram");
+    //uploadAudio("http://10.0.2.2:5000/api/recognition");
+    uploadAudio("http://10.0.2.2:5000/api/transcription");
+    //uploadAudio("http://10.0.2.2:5000/api/predict-emotion");
+    
+      /*axios
+          .get(`http://10.0.2.2:5000/api/accfm`)
+          .then(function (response) {
+            console.log("response",response.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });*/
   }, []);
 
   console.log("fileData", fileDataState);
+
 
   return (
     <ImageBackground
