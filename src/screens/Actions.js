@@ -9,6 +9,7 @@ import {
   Pressable,
 } from "react-native";
 import { useState, useEffect } from "react";
+import * as FileSystem from "expo-file-system";
 
 const Actions = ({ navigation, route }) => {
   const [person, setPerson] = useState();
@@ -20,9 +21,20 @@ const Actions = ({ navigation, route }) => {
 
   useEffect(() => {
     //fonksiyonları burada çağır
+    const vawFile = handleBase64();
+    console.log("vawFile", vawFile);
   }, []);
 
   console.log("fileData", fileDataState);
+  console.log("x", fileDataState._parts[0][1].uri);
+  const fileUri = fileDataState._parts[0][1].uri;
+  const handleBase64 = async () => {
+    const fileBase64 = await FileSystem.readAsStringAsync(fileUri, {
+      encoding: "base64",
+    });
+
+    return fileBase64;
+  };
 
   return (
     <ImageBackground
