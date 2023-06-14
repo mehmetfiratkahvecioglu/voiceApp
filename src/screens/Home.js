@@ -18,7 +18,9 @@ screenHeight = Dimensions.get("window").height;
 
 export default function Home({ navigation }) {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [fileDataState, setFileDataState] = useState(null);
   const fileData = new FormData();
+
   /*const pickFile = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
@@ -64,6 +66,8 @@ export default function Home({ navigation }) {
             type: "audio/wav",
           });
 
+          setFileDataState(fileData);
+
           // Burada fileData'ı bir POST isteği ile sunucuya göndermek için gerekli işlemleri yapabilirsiniz.
           // Örneğin, axios veya fetch kullanarak bir POST isteği gönderebilirsiniz.
 
@@ -84,7 +88,7 @@ export default function Home({ navigation }) {
   };
 
   const handleContinue = () => {
-    navigation.navigate("Actions", { selectedFile, fileData });
+    navigation.navigate("Actions", { selectedFile, fileDataState });
   };
 
   return (
