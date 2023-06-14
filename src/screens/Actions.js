@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import * as FileSystem from "expo-file-system";
+
 const Actions = ({ navigation, route }) => {
   const [person, setPerson] = useState();
   const [wordCount, setWordCount] = useState();
@@ -58,6 +60,15 @@ const Actions = ({ navigation, route }) => {
   }, []);
 
   console.log("fileData", fileDataState);
+  console.log("x", fileDataState._parts[0][1].uri);
+  const fileUri = fileDataState._parts[0][1].uri;
+  const handleBase64 = async () => {
+    const fileBase64 = await FileSystem.readAsStringAsync(fileUri, {
+      encoding: "base64",
+    });
+
+    return fileBase64;
+  };
 
 
   return (
