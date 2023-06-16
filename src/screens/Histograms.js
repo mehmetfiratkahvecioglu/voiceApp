@@ -15,7 +15,9 @@ import * as FileSystem from "expo-file-system";
 const Actions = ({ navigation, route }) => {
   const [image64, setImage64] = useState();
   const { fileDataState } = route.params;
-
+  const [histogram,setHistogram]=useState();
+  const [spectrogram,setSpectrogram]=useState();
+  const [signal,setSignal]=useState();
   screenWidth = Dimensions.get("window").width;
   screenHeight = Dimensions.get("window").height;
   useEffect(() => {
@@ -36,23 +38,16 @@ const Actions = ({ navigation, route }) => {
           },
         });
 
-        setState(response);
+        //setState(response);
+        setHistogram(response.data.histogram)
+        console.log("histogram ",histogram);
 
-        console.log("Response:", response.data);
+        //console.log("Response:", response.data);
       } catch (error) {
         console.error("Error:", error);
       }
     };
-    //uploadAudio("http://10.0.2.2:5000/api/histogram",setImage64);
-
-    axios
-      .get(`http://10.0.2.2:5000/api/accfm`)
-      .then(function (response) {
-        setAccFm(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    uploadAudio("http://10.0.2.2:5000/api/histogram",setImage64);
   }, []);
 
   const fileUri = fileDataState._parts[0][1].uri;
@@ -70,6 +65,13 @@ const Actions = ({ navigation, route }) => {
       style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
     >
       <View style={styles.innerContainer}>
+        {histogram&&(<Image
+    source={{
+        uri:`data:image/jpg;base64,${histogram}`
+    }}
+    resizeMode="center"
+    style={{height:100}}
+/>)}
         <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
           SA hasanım nbr
         </Text>
