@@ -13,13 +13,9 @@ import axios from "axios";
 import * as FileSystem from "expo-file-system";
 
 const Actions = ({ navigation, route }) => {
-  const [accFm, setAccFm] = useState();
-  const [speaker, setSpeaker] = useState();
-  const [sentence, setSentence] = useState();
-  const [emotion, setEmotion] = useState();
   const [image64, setImage64] = useState();
+  const { fileDataState } = route.params;
 
-  const { selectedFile, fileDataState } = route.params;
   screenWidth = Dimensions.get("window").width;
   screenHeight = Dimensions.get("window").height;
   useEffect(() => {
@@ -48,9 +44,6 @@ const Actions = ({ navigation, route }) => {
       }
     };
     //uploadAudio("http://10.0.2.2:5000/api/histogram",setImage64);
-    uploadAudio("http://10.0.2.2:5000/api/recognition", setSpeaker);
-    uploadAudio("http://10.0.2.2:5000/api/transcription", setSentence);
-    uploadAudio("http://10.0.2.2:5000/api/predict-emotion", setEmotion);
 
     axios
       .get(`http://10.0.2.2:5000/api/accfm`)
@@ -78,38 +71,9 @@ const Actions = ({ navigation, route }) => {
     >
       <View style={styles.innerContainer}>
         <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Seçilen Dosya: {selectedFile}
-        </Text>
-        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Kişi: {speaker?.data?.speaker}
-        </Text>
-        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Cümle, kelime sayısı : {sentence?.data?.transcription},{" "}
-          {sentence?.data?.word_count}
-        </Text>
-        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Duygu Tahmini: {emotion?.data?.prediction}
-        </Text>
-        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Acc Fm Değerleri:
-        </Text>
-        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Education ACC: {accFm?.data?.education_acc}
-        </Text>
-        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Education FM: {accFm?.data?.education_fm}
-        </Text>
-        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Test ACC: {accFm?.data?.test_acc}
-        </Text>
-        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Test FM: {accFm?.data?.test_fm}
+          SA hasanım nbr
         </Text>
       </View>
-      <Button
-        title="Histogramlar"
-        onPress={() => navigation.navigate("Histograms", { fileDataState })}
-      />
     </ImageBackground>
   );
 };
@@ -122,7 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.8)",
     padding: 20,
     borderRadius: 20,
-    minHeight: screenHeight * 0.9,
+    height: screenHeight * 0.9,
     justifyContent: "space-around",
   },
   pickFileButton: {
