@@ -47,9 +47,8 @@ const Actions = ({ navigation, route }) => {
         console.error("Error:", error);
       }
     };
-    //uploadAudio("http://10.0.2.2:5000/api/histogram",setImage64);
-    uploadAudio("http://10.0.2.2:5000/api/recognition", setSpeaker);
     uploadAudio("http://10.0.2.2:5000/api/transcription", setSentence);
+    uploadAudio("http://10.0.2.2:5000/api/recognition", setSpeaker);
     uploadAudio("http://10.0.2.2:5000/api/predict-emotion", setEmotion);
 
     axios
