@@ -39,6 +39,8 @@ const Actions = ({ navigation, route }) => {
           },
         });
 
+        setState(response);
+
         console.log("Response:", response.data);
       } catch (error) {
         console.error("Error:", error);
