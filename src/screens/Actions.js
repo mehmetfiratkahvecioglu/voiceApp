@@ -55,15 +55,12 @@ const Actions = ({ navigation, route }) => {
           .get(`http://10.0.2.2:5000/api/accfm`)
           .then(function (response) {
             setAccFm(response)
-            console.log("response",response.data);
           })
           .catch(function (error) {
             console.log(error);
           });
   }, []);
 
-  console.log("fileData", fileDataState);
-  console.log("x", fileDataState._parts[0][1].uri);
   const fileUri = fileDataState._parts[0][1].uri;
   const handleBase64 = async () => {
     const fileBase64 = await FileSystem.readAsStringAsync(fileUri, {
