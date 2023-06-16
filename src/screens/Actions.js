@@ -13,43 +13,43 @@ import axios from "axios";
 import * as FileSystem from "expo-file-system";
 
 const Actions = ({ navigation, route }) => {
-  const [person, setPerson] = useState();
-  const [wordCount, setWordCount] = useState();
-  const [sentiment, setSentiment] = useState();
   const [accFm, setAccFm] = useState();
+  const [speaker, setSpeaker] = useState();
+  const [sentence, setSentence] = useState();
+  const [emotion, setEmotion] = useState();
+  const [image64, setImage64] = useState();
 
   const { selectedFile, fileDataState } = route.params;
 
   useEffect(() => {
-
     //fonksiyonları burada çağır
     const audioURI = fileDataState._parts[0][1].uri;
-    const uploadAudio = async (url) => {
+    const uploadAudio = async (url, setState) => {
       try {
         const formData = new FormData();
-        formData.append('audio_file', {
+        formData.append("audio_file", {
           uri: audioURI,
-          type: 'audio/wav',
-          name: fileDataState._parts[0][1].name
+          type: "audio/wav",
+          name: fileDataState._parts[0][1].name,
         });
-    
+
         const response = await axios.post(url, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         });
-    
-        console.log('Response:', response.data);
+
+        console.log("Response:", response.data);
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     };
-    //uploadAudio("http://10.0.2.2:5000/api/histogram");
-    //uploadAudio("http://10.0.2.2:5000/api/recognition");
-    uploadAudio("http://10.0.2.2:5000/api/transcription");
-    //uploadAudio("http://10.0.2.2:5000/api/predict-emotion");
-    
-      /*axios
+    //uploadAudio("http://10.0.2.2:5000/api/histogram",setImage64);
+    //uploadAudio("http://10.0.2.2:5000/api/recognition",setSpeaker);
+    uploadAudio("http://10.0.2.2:5000/api/transcription", setSentence);
+    //uploadAudio("http://10.0.2.2:5000/api/predict-emotion",setEmotion);
+
+    /*axios
           .get(`http://10.0.2.2:5000/api/accfm`)
           .then(function (response) {
             console.log("response",response.data);
@@ -70,7 +70,6 @@ const Actions = ({ navigation, route }) => {
     return fileBase64;
   };
 
-
   return (
     <ImageBackground
       source={require("../../assets/voiceBackground.jpeg")}
@@ -81,13 +80,13 @@ const Actions = ({ navigation, route }) => {
           Seçilen Dosya: {selectedFile}
         </Text>
         <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Kişi: {person}
+          Kişi: {speaker}
         </Text>
         <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Kelime Sayısı: {wordCount}
+          Cümle, kelime sayısı : {sentence} {sentence}
         </Text>
         <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Duygu Tahmini: {sentiment}
+          Duygu Tahmini: {emotion}
         </Text>
         <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
           Acc Fm Değeri: {accFm}
