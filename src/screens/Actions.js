@@ -47,18 +47,19 @@ const Actions = ({ navigation, route }) => {
       }
     };
     //uploadAudio("http://10.0.2.2:5000/api/histogram",setImage64);
-    //uploadAudio("http://10.0.2.2:5000/api/recognition",setSpeaker);
+    uploadAudio("http://10.0.2.2:5000/api/recognition",setSpeaker);
     uploadAudio("http://10.0.2.2:5000/api/transcription", setSentence);
-    //uploadAudio("http://10.0.2.2:5000/api/predict-emotion",setEmotion);
+    uploadAudio("http://10.0.2.2:5000/api/predict-emotion",setEmotion);
 
-    /*axios
+    axios
           .get(`http://10.0.2.2:5000/api/accfm`)
           .then(function (response) {
+            setAccFm(response)
             console.log("response",response.data);
           })
           .catch(function (error) {
             console.log(error);
-          });*/
+          });
   }, []);
 
   console.log("fileData", fileDataState);
@@ -82,16 +83,28 @@ const Actions = ({ navigation, route }) => {
           Seçilen Dosya: {selectedFile}
         </Text>
         <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Kişi: {speaker}
+          Kişi: {speaker?.data?.speaker}
         </Text>
         <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Cümle, kelime sayısı : {sentence} {sentence}
+          Cümle, kelime sayısı : {sentence?.data?.transcription}, {sentence?.data?.word_count}
         </Text>
         <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Duygu Tahmini: {emotion}
+          Duygu Tahmini: {emotion?.data?.prediction}
         </Text>
         <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          Acc Fm Değeri: {accFm}
+          Acc Fm Değerleri:
+        </Text>
+        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
+          Education ACC: {accFm?.data?.education_acc}
+        </Text>
+        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
+          Education FM: {accFm?.data?.education_fm}
+        </Text>
+        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
+          Test ACC: {accFm?.data?.test_acc}
+        </Text>
+        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
+          Test FM: {accFm?.data?.test_fm}
         </Text>
       </View>
     </ImageBackground>
@@ -106,7 +119,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.8)",
     padding: 20,
     borderRadius: 20,
-    minHeight: screenHeight * 0.5,
+    minHeight: screenHeight * 0.9,
     justifyContent: "space-around",
   },
   pickFileButton: {
