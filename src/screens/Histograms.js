@@ -15,9 +15,9 @@ import * as FileSystem from "expo-file-system";
 const Actions = ({ navigation, route }) => {
   const [image64, setImage64] = useState();
   const { fileDataState } = route.params;
-  const [histogram,setHistogram]=useState();
-  const [spectrogram,setSpectrogram]=useState();
-  const [signal,setSignal]=useState();
+  const [histogram, setHistogram] = useState();
+  const [spectrogram, setSpectrogram] = useState();
+  const [signal, setSignal] = useState();
   screenWidth = Dimensions.get("window").width;
   screenHeight = Dimensions.get("window").height;
   useEffect(() => {
@@ -39,16 +39,16 @@ const Actions = ({ navigation, route }) => {
         });
 
         //setState(response);
-        setHistogram(response.data.histogram)
-        setSpectrogram(response.data.spectrogram)
-        setSignal(response.data.signal)
+        setHistogram(response.data.histogram);
+        setSpectrogram(response.data.spectrogram);
+        setSignal(response.data.signal);
 
         //console.log("Response:", response.data);
       } catch (error) {
         console.error("Error:", error);
       }
     };
-    uploadAudio("http://10.0.2.2:5000/api/histogram",setImage64);
+    uploadAudio("http://10.0.2.2:5000/api/histogram", setImage64);
   }, []);
 
   const fileUri = fileDataState._parts[0][1].uri;
@@ -66,29 +66,48 @@ const Actions = ({ navigation, route }) => {
       style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
     >
       <View style={styles.innerContainer}>
-        {histogram&&(<Image
-    source={{
-        uri:`data:image/jpg;base64,${histogram}`
-    }}
-    resizeMode="center"
-    style={{height:100}}
-/>)}
-
-{spectrogram&&(<Image
-    source={{
-        uri:`data:image/jpg;base64,${spectrogram}`
-    }}
-    resizeMode="center"
-    style={{height:100}}
-/>)}
-
-{signal&&(<Image
-    source={{
-        uri:`data:image/jpg;base64,${signal}`
-    }}
-    resizeMode="center"
-    style={{height:100}}
-/>)}
+        <View>
+          <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
+            Histogram:
+          </Text>
+          {histogram && (
+            <Image
+              source={{
+                uri: `data:image/jpg;base64,${histogram}`,
+              }}
+              resizeMode="center"
+              style={{ height: 100 }}
+            />
+          )}
+        </View>
+        <View>
+          <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
+            Spectogram:
+          </Text>
+          {spectrogram && (
+            <Image
+              source={{
+                uri: `data:image/jpg;base64,${spectrogram}`,
+              }}
+              resizeMode="center"
+              style={{ height: 100 }}
+            />
+          )}
+        </View>
+        <View>
+          <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
+            Signal:
+          </Text>
+          {signal && (
+            <Image
+              source={{
+                uri: `data:image/jpg;base64,${signal}`,
+              }}
+              resizeMode="center"
+              style={{ height: 100 }}
+            />
+          )}
+        </View>
       </View>
     </ImageBackground>
   );
