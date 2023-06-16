@@ -40,7 +40,8 @@ const Actions = ({ navigation, route }) => {
 
         //setState(response);
         setHistogram(response.data.histogram)
-        console.log("histogram ",histogram);
+        setSpectrogram(response.data.spectrogram)
+        setSignal(response.data.signal)
 
         //console.log("Response:", response.data);
       } catch (error) {
@@ -72,9 +73,22 @@ const Actions = ({ navigation, route }) => {
     resizeMode="center"
     style={{height:100}}
 />)}
-        <Text style={{ color: "#FAFAFA", fontSize: 18, fontWeight: "bold" }}>
-          SA hasanım nbr
-        </Text>
+
+{spectrogram&&(<Image
+    source={{
+        uri:`data:image/jpg;base64,${spectrogram}`
+    }}
+    resizeMode="center"
+    style={{height:100}}
+/>)}
+
+{signal&&(<Image
+    source={{
+        uri:`data:image/jpg;base64,${signal}`
+    }}
+    resizeMode="center"
+    style={{height:100}}
+/>)}
       </View>
     </ImageBackground>
   );
